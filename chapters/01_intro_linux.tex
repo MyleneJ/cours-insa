@@ -34,10 +34,11 @@
   \item N'est pas un système d'exploitation : est lié au projet GNU\\
     \MVRightarrow{} distribution GNU/Linux
   \end{itemize}
+    \center \includegraphics[height=0.3\textheight]{pictures/torvalds.jpg}
 \end{frame}
 
 \begin{frame}{Linux dans l'industrie}{}
-  L'intérét pour les entreprise est:
+  L'intérét pour les entreprises est:
   \begin{itemize}
   \item de maitriser les sources de leur OS
   \item d'économiser le prix des licences
@@ -52,7 +53,9 @@
 \begin{frame}{Basé sur UNIX}{}
   \begin{itemize}
   \item Implémentation libre d'UNIX diffusé sous licence GPL
-  \item Inspiré des deux versions: AT\&T et BSD
+  \begin{center}
+    \includegraphics[height=0.4\textheight]{pictures/unix.png}
+  \end{center}
   \item Les principes d'UNIX sont respectés:
   \begin{itemize}
   \item Simplicité, modularité, respect des standards, ouverture
@@ -131,13 +134,13 @@
 
 \begin{frame}{Système GNU/Linux}{}
   \begin{itemize}
-  \item Noyau libre semblable à un noyau Unix, conçu par Linus Torvalds en 1991
+  \item Noyau libre semblable à un noyau Unix
   \item Le système complet se repose sur les outils GNU:
     \begin{itemize}
     \item bibliothèque C, gcc, binutils, fileutils, make, emacs...
     \item Le système complet est donc appelé "\textbf{GNU / Linux}"
     \end{itemize}
-  \item Très tôt partagé comme Logiciel Libre (Licence GPL) \MVRightarrow attira des contributeurs et des utilisateurs de plus en plus nombreux
+  \item Très tôt partagé comme Logiciel Libre (Licence GPL) \MVRightarrow contributeurs et des utilisateurs de plus en plus nombreux
   \item Maintenant, fournit en tant que "distribution" (Ubuntu, Fedora, Debian, etc)
   \item Système entier composé de:
     \begin{itemize}
@@ -265,9 +268,9 @@
 \begin{frame}{Le processus init}
   \begin{itemize}
   \item Le père des processus du système
-  \item Plusieurs systèmes possible:
+  \item Plusieurs systèmes possibles:
     \begin{itemize}
-    \item system5:
+    \item systemV:
       \begin{itemize}
       \item facile à configurer car basé sur des scripts shell
       \item architecture vieille et dépassé. Moins performant
@@ -279,8 +282,8 @@
       \end{itemize}
     \item custom:
       \begin{itemize}
-      \item Linux permet d'utiliser son propre binaire init.
-      \item Il faut gérer soit même le système.
+      \item Linux permet d'utiliser son propre binaire init
+      \item Il faut gérer soit même le système
       \end{itemize}
     \end{itemize}
   \end{itemize}
