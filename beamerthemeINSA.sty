@@ -1,9 +1,10 @@
-% Beamer theme for Bootlin presentations
+% Beamer theme for INSA presentations
 % Copyright (C) 2010 Maxime Petazzoni <maxime.petazzoni@bulix.org>
 % Creative Commons CC-by-sa 3.0
 
 \usepackage[absolute,verbose,overlay]{textpos}
 \usepackage{fancyvrb}
+\usepackage{hyperref}
 \setlength{\TPHorizModule}{\paperwidth}
 \setlength{\TPVertModule}{\paperheight}
 
@@ -12,7 +13,6 @@
 \useoutertheme{default}
 \usecolortheme{seahorse}
 
-% Define the "Bootlin blue" color
 \definecolor{blblue}{rgb}{0.5976,0.5976,0.7968}
 \setbeamercolor*{palette primary}{bg=blblue}
 
@@ -23,8 +23,9 @@
 \setbeamercolor{block body}{bg=blcodebg}
 
 \setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamertemplate{caption}{\raggedright\insertcaption\par}
+\setbeamerfont{caption}{size=\tiny}
 
-% Custom bootlin commands
 \newcommand{\code}[1]{{\usebeamercolor[fg]{code} \path{#1}}}
 \newcommand{\codewithhash}[1]{{\usebeamercolor[fg]{code} \tt{#1}}}
 \newcommand\kfunc[1]{\href{https://elixir.bootlin.com/linux/latest/ident/#1}{\code{#1()}}}
@@ -140,7 +141,6 @@
       }
       Document updates and sources:\\
       \url{\@trainingurl}\\
-      Corrections, suggestions, contributions and translations are welcome!
       \column{0.5\textwidth}
       \includegraphics[height=10cm]{pictures/tux-new.png}%common/logo-square.pdf}
     \end{columns}
@@ -153,7 +153,10 @@
     \begin{columns}[b]
       \column{0.5\textwidth}
       \hspace{2cm}
-      \includegraphics[scale=1.5]{pictures/tux-new.png}
+      \begin{figure}
+        \includegraphics[scale=1]{pictures/tux-new.png}
+        \caption{Dessin issu d'une photographie de \href{https://commons.wikimedia.org/wiki/File:Manchot_royal_-_King_Penguin.jpg}{Samuel Blanc}}
+      \end{figure}
       \column{0.5\textwidth}
       \huge
       \insertsection\\
@@ -165,7 +168,6 @@
       \tinyv
       © Copyright 2004-\the\year, Bootlin.\\
       Creative Commons BY-SA 3.0 license.\\
-      Corrections, suggestions, contributions and translations are welcome!
     \end{columns}
   \end{frame}
 }
