@@ -41,7 +41,7 @@
     \item Noyau Linux adapté à l'archi hardware
     \item Outils GNU/LINUX Commandes Linux (sh, ls, cp, etc.)
     \item Applications ...
-    \item Outil de génération (BR, OE, ...)
+    \item Outil de génération (Buildroot, OpenEmbedded, ...)
     \end{itemize}
   \end{itemize}
 \end{frame}
@@ -74,7 +74,7 @@
     \item Constantes
     \item Structures de données, etc.
     \end{itemize}
-  \item Compiler la libC – et certaines applications - nécessite les en-tête du noyau
+  \item Compiler la libC – et certaines applications - nécessite les en-têtes du noyau
   \item Disponibles dans \code{<linux/...>} et \code{<asm/...>} et d'autres répertoires des sources du noyau (include, ...)
   \end{itemize}
 \end{frame}
@@ -102,7 +102,7 @@
 \end{frame}
 
 \subsection{Compilateur source}
-\begin{frame}{Compilé son compilateur}
+\begin{frame}{Compiler son compilateur}
   \begin{itemize}
   \item Construire un compilateur:
     \begin{itemize}
@@ -168,9 +168,9 @@
   \item Binaires de base indispensables au système (ls, bash, dd, top, cp, mv, init,...)
   \item Trois possibilités:
     \begin{itemize}
-    \item Récupérer les sources et les compiler un par un. (laborieux)
-    \item GNU/Linux coreutils (trop lourd pour l'embarqué)
-    \item Busybox (regroupe la majorité des commandes Linux en un seul executable)
+    \item Récupérer les sources et les compiler un par un \MVRightarrow laborieux
+    \item GNU/Linux coreutils \MVRightarrow trop lourd pour l'embarqué
+    \item Busybox : regroupe la majorité des commandes Linux en un seul executable
       \begin{itemize}
       \item 95\% des distributions Linux embarqués l'utilise
       \item Simple, léger, portable
