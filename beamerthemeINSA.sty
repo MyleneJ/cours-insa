@@ -67,7 +67,7 @@
     \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.5ex]{frametitle}%
       \usebeamerfont{frametitle}
       \begin{textblock}{.2}[0.5,0.5](0.12,0.07)
-       \includegraphics[width=1cm]{common/logo-penguins.pdf}
+       \includegraphics[width=1cm]{pictures/tux.png}%common/logo-penguins.pdf}
       \end{textblock}
       \hspace{1.25cm}
       \insertframetitle
@@ -81,12 +81,13 @@
   \hbox{%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,leftskip=0.5em]{palette primary}%
       \Tiny
-      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} lr }
-        \includegraphics[width=0.03\textwidth]{common/bootlin-logo.pdf}
-        - Kernel, drivers and embedded Linux - Development,
-        consulting, training and support -
-        ~{\tt https://bootlin.com} & \insertframenumber{}/\inserttotalframenumber{}
-      \end{tabular*}
+%      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} lr }
+%        \includegraphics[width=0.03\textwidth]{common/bootlin-logo.pdf}
+%        - Kernel, drivers and embedded Linux - Development,
+%        consulting, training and support -
+%        ~{\tt https://bootlin.com} & \insertframenumber{}/\inserttotalframenumber{}
+                                      %        \end{tabular*}
+      \center \insertframenumber{}/\inserttotalframenumber{}
     \end{beamercolorbox}
   }
   \vskip0pt
@@ -147,7 +148,7 @@
       \url{\@trainingurl}\\
       Corrections, suggestions, contributions and translations are welcome!
       \column{0.5\textwidth}
-      \includegraphics[height=4cm]{common/logo-square.pdf}
+      \includegraphics[height=10cm]{pictures/tux-new.png}%common/logo-square.pdf}
     \end{columns}
   \end{frame}
 }
@@ -156,6 +157,9 @@
 {
   \begin{frame}{\insertconference}
     \begin{columns}[b]
+      \column{0.5\textwidth}
+      \hspace{2cm}
+      \includegraphics[scale=1.5]{pictures/tux-new.png}%common/logo-square.pdf}
       \column{0.5\textwidth}
       \huge
       \insertsection\\
@@ -168,8 +172,6 @@
       © Copyright 2004-\the\year, Bootlin.\\
       Creative Commons BY-SA 3.0 license.\\
       Corrections, suggestions, contributions and translations are welcome!
-      \column{0.5\textwidth}
-      \includegraphics[scale=0.45]{common/logo-square.pdf}
     \end{columns}
   \end{frame}
 }
