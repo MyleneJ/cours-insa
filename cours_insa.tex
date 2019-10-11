@@ -9,8 +9,8 @@
 \usepackage[normalem]{ulem}
 \usepackage{textcomp}
 \usepackage{marvosym} % \MVRIGHTarrow
-
-\usepackage{multimedia}
+\usepackage{tabularx}
+%\usepackage{multimedia}
 
 \mode<presentation>
 \usetheme{INSA}
@@ -25,21 +25,16 @@
   {\signed{\usebox\mybox}\end{quotation}}
 
 \authors{Mylène Josserand}
-\conference{INSA Linux embarqué}
+\conference{Cours INSA}
 \email{josserand.mylene@gmail.com}
 \slidesurl{}
 
-\title{Introduction à GNU/Linux}
+\title{Introduction à Linux embarqué}
 \author[Mylène Josserand]
 {Mylène Josserand}
 \date[Octobre 2019]
-{INSA Linux embarqué, Octobre 2019}
-\institute[Open Wide]
-{
-  Développeuse Linux embarqué chez Bootlin\\
-  josserand.mylene@gmail.com\\
-  Mylene sur IRC et MyleneJ sur github
-}
+{Cours INSA, Octobre 2019}
+\institute[Bootlin]
 
 \begin{document}
 
@@ -49,24 +44,24 @@
 
 \begin{frame}{Mylène Josserand}
   \begin{itemize}
-    \item Ingénieure Kernel Linux et formatrice chez Bootlin.
-      \begin{itemize}
-        \item Linux kernel and driver development, system integration,
-          boot time optimization, consulting\dots
-        \item Embedded Linux, Linux driver development, Yocto Project
-          \& OpenEmbedded and Buildroot training, with materials
-          freely available under a Creative Commons license.
-        \item \url{https://bootlin.com} TODO
-      \end{itemize}
-    \item Contributions: TODO
-      \begin{itemize}
-        \item Worked on network (MAC, PHY, switch) and cryptographic
-          engines.
-        \item Contributed to the Marvell EBU SoCs upstream support.
-        \item Introduced the Marvell Berlin SoCs upstream support.
-        \item Co-maintainer of the Annapurna Alpine SoCs.
-      \end{itemize}
+  \item Master pro génie physiologique et informatique, option Imagerie Médicale
+  \item Ingénieure Kernel Linux et formatrice chez Bootlin
+  \item Développement de driver Linux, intégration système sous Yocto Project/Open Embedded et Buildroot
+  \item \url{josserand.mylene@gmail.com}
+  \item Mylene sur IRC et MyleneJ sur github
+      % \begin{itemize}
+      %   \item Linux kernel et dévelopement de driver, system integration,
+      %     boot time optimization, consulting\dots
+      %   \item Embedded Linux, Linux driver development, Yocto Project
+      %     \& OpenEmbedded and Buildroot training, with materials
+      %     freely available under a Creative Commons license.
+      %   \item \url{https://bootlin.com} TODO
+      % \end{itemize}
   \end{itemize}
+\end{frame}
+
+\begin{frame}{Sommaire}
+  \hspace{5cm}\tableofcontents
 \end{frame}
 
 \input{chapters/01_intro_linux.tex}
@@ -78,11 +73,12 @@
     Questions ? Commentaires ?\\
     \vspace{1cm}
     \large
-    Mylène Josserand — \code{josserand.mylene@gmail.com}
+    Mylène Josserand — \code{josserand.mylene@gmail.com}\\
     \vspace{1cm}
-    Slides under CC-BY-SA 3.0
+    Slides under CC-BY-SA 3.0\\
+    © Copyright 2004-\the\year, Bootlin\\
     \scriptsize
-    \url{TODO}
+    \url{https://github.com/MyleneJ/cours-insa}
   \end{center}
 \end{frame}
 
