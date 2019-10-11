@@ -67,7 +67,7 @@
     \begin{beamercolorbox}[wd=\paperwidth,ht=3ex,dp=1.5ex]{frametitle}%
       \usebeamerfont{frametitle}
       \begin{textblock}{.2}[0.5,0.5](0.12,0.07)
-       \includegraphics[width=1cm]{pictures/tux.png}%common/logo-penguins.pdf}
+       \includegraphics[width=1cm]{pictures/tux.png}
       \end{textblock}
       \hspace{1.25cm}
       \insertframetitle
@@ -81,12 +81,6 @@
   \hbox{%
     \begin{beamercolorbox}[wd=\paperwidth,ht=2.25ex,dp=1ex,leftskip=0.5em]{palette primary}%
       \Tiny
-%      \begin{tabular*}{\textwidth}{@{\extracolsep{\fill}} lr }
-%        \includegraphics[width=0.03\textwidth]{common/bootlin-logo.pdf}
-%        - Kernel, drivers and embedded Linux - Development,
-%        consulting, training and support -
-%        ~{\tt https://bootlin.com} & \insertframenumber{}/\inserttotalframenumber{}
-                                      %        \end{tabular*}
       \center \insertframenumber{}/\inserttotalframenumber{}
     \end{beamercolorbox}
   }
@@ -159,7 +153,7 @@
     \begin{columns}[b]
       \column{0.5\textwidth}
       \hspace{2cm}
-      \includegraphics[scale=1.5]{pictures/tux-new.png}%common/logo-square.pdf}
+      \includegraphics[scale=1.5]{pictures/tux-new.png}
       \column{0.5\textwidth}
       \huge
       \insertsection\\
@@ -183,21 +177,6 @@
     \begin{center}
       \insertsubsection
     \end{center}
-  \end{frame}
-}
-
-%% Create a slide announcing a lab, with the beautiful worker penguin
-%% on the left.
-%%  first argument: slide title (will be prepended by 'Practical lab - ')
-%%  second argument: contents of the slide
-\newcommand\setuplabframe[2]{
-  \begin{frame}{Practical lab - #1}
-    \begin{columns}
-      \column{0.4\textwidth}
-      \includegraphics[width=\textwidth]{common/lab-penguin.png}
-      \column{0.6\textwidth}
-      #2
-      \end{columns}
   \end{frame}
 }
 
