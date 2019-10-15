@@ -1,11 +1,12 @@
-DOC = cours_insa.tex
+DOCS = $(wildcard */*.tex)
 
-PICTURES = $(patsubst %.dia,%.pdf,$(wildcard */*.dia)) \
+PICTURES = $(patsubst %.dia,%.pdf,$(wildcard */*/*.dia)) \
         $(patsubst %.svg,%.pdf,$(wildcard */*.svg)) \
         $(patsubst %.eps,%.pdf,$(wildcard */*.eps))
+ARTEFACTS = *.pyg *.snm *.toc *.vrb *.aux *.nav *.out
 
 all: $(PICTURES)
-	$(PDFLATEX_ENV) pdflatex -shell-escape $(DOC)
+	$(PDFLATEX_ENV) pdflatex -shell-escape $(DOCS)
 
 %.pdf: %.svg
 	inkscape -D -A $@ $<
@@ -17,4 +18,4 @@ all: $(PICTURES)
 	dia -e $@ -t eps $^
 
 clean:
-	$(RM) -r common/*.pdf *.pdf *.pyg *.snm *.toc *.vrb *.aux *.nav *.out *.dia~ *.log _minted* $(PICTURES)
+	$(RM) -r *.pdf *.dia~ *.log _minted* $(PICTURES) $(ARTEFACTS)
