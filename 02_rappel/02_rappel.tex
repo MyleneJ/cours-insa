@@ -1,0 +1,146 @@
+\documentclass[aspectratio=169,obeyspaces,spaces,hyphens,dvipsnames]{beamer}
+\usepackage[utf8x]{inputenc}
+\usepackage{lmodern}% http://ctan.org/pkg/lm
+\usepackage{minted}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage[normalem]{ulem}
+\usepackage{textcomp}
+\usepackage{marvosym} % \MVRIGHTarrow
+\usepackage{tabularx}
+
+\mode<presentation>
+\usetheme{INSA}
+
+\def\signed #1{{\leavevmode\unskip\nobreak\hfil\penalty50\hskip2em
+  \hbox{}\nobreak\hfil(#1)
+  \parfillskip=0pt \finalhyphendemerits=0 \endgraf}}
+
+\newsavebox\mybox
+\newenvironment{aquote}[1]
+  {\savebox\mybox{#1}\begin{quotation}}
+  {\signed{\usebox\mybox}\end{quotation}}
+
+\authors{Mylène Josserand}
+\conference{Cours INSA}
+\email{josserand.mylene@gmail.com}
+\slidesurl{}
+
+\title{Introduction à Linux embarqué - quelques rappels}
+\author[Mylène Josserand]
+{Mylène Josserand}
+\date[Octobre 2019]
+{Cours INSA, Octobre 2019 \\
+  \vspace{0.5cm}
+  \includegraphics[scale=0.1]{pictures/insa-tls.png}
+  \hspace{0.5cm}
+  \includegraphics[scale=0.1]{pictures/tux.png}
+}
+\institute[]
+{Développeuse et formatrice Linux embarqué}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Qu'est-ce que Linux embarqué?}
+  \huge
+  \begin{center}
+    Linux Embarqué est l'utilisation du {\bf kernel Linux} et différents
+    composants {\bf open-source}(GNU) dans des {\bf systèmes embarqués}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Architecture globale}
+  \begin{center}
+    \includegraphics[width=0.9\textwidth]{graphics/02_rappel/global-architecture.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Composants software}
+  \begin{itemize}
+  \item Toolchain de cross-compilation
+    \begin{itemize}
+    \item Compilateyr qui ext executé sur la machine de développement
+      mais qui génère du code pour la cible
+    \end{itemize}
+  \item Bootloader
+    \begin{itemize}
+    \item Démarre le hardware, responsable des initialisations basiques,
+      charge et execute le kernel
+    \end{itemize}
+  \item Kernel Linux
+    \begin{itemize}
+    \item Contient la gestion des processus et de la mémoire, le réseau, les
+      pilotes des périphériques et fournit des services aux applications
+      user space
+    \end{itemize}
+  \item Library C
+    \begin{itemize}
+    \item Interface entre le kernel et les applications user space
+    \end{itemize}
+  \item Bibliothèques et applications
+    \begin{itemize}
+    \item De tiers ou faites maisons
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+
+\begin{frame}
+  \frametitle{Kernel Linux dans le système}
+  \begin{center}
+    \includegraphics[height=0.8\textheight]{graphics/02_rappel/linux-kernel-in-system.pdf}
+  \end{center}
+\end{frame}
+
+
+\begin{frame}{Dans le kernel Linux}
+  \begin{center}
+    \includegraphics[width=\textwidth]{graphics/02_rappel/inside-linux-kernel.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Cross-toolchain}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{graphics/02_rappel/cross-toolchain.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Differentes procédures de compilation}
+  \begin{center}
+    \includegraphics[height=0.8\textheight]{graphics/02_rappel/toolchain-build-types.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Composants d'une toolchain}
+  \begin{center}
+    \includegraphics[width=0.8\textwidth]{graphics/02_rappel/components.pdf}
+  \end{center}
+\end{frame}
+
+\begin{frame}
+  \begin{center}
+    \Huge
+    Merci de votre attention ! \\
+    Questions ? Commentaires ?\\
+    \vspace{1cm}
+    \large
+    Mylène Josserand — \code{josserand.mylene@gmail.com}\\
+    \vspace{1cm}
+    Slides under CC-BY-SA 3.0\\
+    \scriptsize{© Copyright 2004-\the\year, Bootlin\\
+    \url{https://github.com/MyleneJ/cours-insa}}
+  \end{center}
+\end{frame}
+
+\end{document}
