@@ -18,4 +18,4 @@ all: $(PICTURES)
 	dia -e $@ -t eps $^
 
 clean:
-	$(RM) -r *.pdf *.dia~ *.log _minted* $(PICTURES) $(ARTEFACTS)
+	$(RM) -r *.dia~ *.log _minted* $(PICTURES) $(ARTEFACTS)
