@@ -16,7 +16,9 @@ all: $(PICTURES) $(DOCS)
 %.eps: %.dia
 	dia -e $@ -t eps $^
 
+# Compile twice to get the correct page numbering
 %.pdf: %.tex
+	$(PDFLATEX_ENV) pdflatex -shell-escape $^
 	$(PDFLATEX_ENV) pdflatex -shell-escape $^
 
 clean:
