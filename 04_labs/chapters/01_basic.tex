@@ -11,7 +11,9 @@
   \end{itemize}
 }
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Setup}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Comme spécifié dans la documentation Buildroot\footnote{\url{https://buildroot.org/downloads/manual/manual.html\#requirement-mandatory}}, vous avez besoin de certains paquets/dépendances :
 
@@ -20,7 +22,11 @@ sudo apt install sed make binutils gcc g++ bash patch \
   gzip bzip2 perl tar cpio python unzip rsync wget libncurses-dev
 \end{verbatim}
 
+Lisez les spécificités de votre carte RPi3 sur différents sites notamment \href{https://www.raspberrypi.org/products/raspberry-pi-3-model-b/}{le site de la Raspberry Fondation}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Télécharger Buildroot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Comme nous allons réaliser du développement Buildroot, on va télécharger les sources depuis le répertoire Git :
 
@@ -33,10 +39,12 @@ Aller dans le nouveau dossier \code{buildroot} créé.
 Nous allons utiliser la branche {\em 2019.08} de cette release.
 
 \begin{verbatim}
-git checkout 2019.08 -b 2019.08
+git checkout 2019.08
 \end{verbatim}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Configuration de Buildroot}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Si vous regardez le dossier \code{configs/}, vous verrez qu'il y a un fichier
 \code{raspberrypi3_defconfig}, qui est une configuration pour construire
@@ -63,8 +71,8 @@ Maintenant, regardons les points importants Buildroot:
 \item Menu \code{Target Options}
   \begin{itemize}
   \item \code{Target Architecture} : \code{ARM (little endian)}
-  \item \code{Target Architecture Variant} : D'après le site web de la
-    RPi3 \url{https://www.raspberrypi.org/products/raspberry-pi-3-model-b/},
+  \item \code{Target Architecture Variant} : D'après le
+    \href{https://www.raspberrypi.org/products/raspberry-pi-3-model-b/}{site web de la RPi3},
     ils utilisent un CPU Broadcom BCM2837 qui est basé sur ARM \code{Cortex-A53}
   \end{itemize}
 \item Menu \code{Build options} : Regardez notamment le lieu où sauver la
@@ -103,7 +111,9 @@ Maintenant, regardons les points importants Buildroot:
 
 \end{itemize}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Compilation}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Simplement lancez \code{make} ou redirigez la sortie avec la commande
 \code{tee}:
@@ -112,7 +122,9 @@ Simplement lancez \code{make} ou redirigez la sortie avec la commande
 make 2>&1 | tee build.log
 \end{verbatim}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Flasher la carte SD}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 Une fois la compilation terminée, on va pouvoir flasher notre système
 sur notre carte SD. Mais avant, encore faut-il l'identifier !
@@ -135,16 +147,27 @@ sudo dd if=output/images/sdcard.img of=/dev/mmcblk0 bs=1M
 
 Ou \code{sdc} ou \code{sdb} au lieu de \code{mmcblk0} si besoin.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Démarrage du système}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-Insérez la carte SD dans la RPi3. Vous devriez voir le système booter !
+Insérez la carte SD dans la RPi3.\\
+Branchez la série selon les pins de votre RPi3 :
+
+\begin{centering}
+  \includegraphics[height=0.5\textheight]{pictures/04_labs/rpi3_gpio_layout.png} \\
+\end{centering}
+
+Allumez via USB votre board et vous devriez voir le système booter !
 
 Le login est \code{root} et profitez pour explorer le système. Lancer
 \code{ps} pour regarder combien de processus sont en cours d'exécution,
 qu'est-ce que Buildroot a généré dans \code{/bin}, \code{/lib}, \code{/usr}
 et \code{/etc}.
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Explorer le log de build}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 De retour sur votre machine de build, regardez la sortie du log \code{build.log}.
 Buildroot est un peu verbose mais il affichera chaque message important d'un
