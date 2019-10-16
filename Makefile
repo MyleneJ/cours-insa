@@ -1,12 +1,11 @@
-DOCS = $(wildcard */*.tex)
+DOCS = $(patsubst %.tex,%.pdf,$(wildcard */*.tex))
 
 PICTURES = $(patsubst %.dia,%.pdf,$(wildcard */*/*.dia)) \
         $(patsubst %.svg,%.pdf,$(wildcard */*.svg)) \
         $(patsubst %.eps,%.pdf,$(wildcard */*.eps))
 ARTEFACTS = *.pyg *.snm *.toc *.vrb *.aux *.nav *.out
 
-all: $(PICTURES)
-	$(PDFLATEX_ENV) pdflatex -shell-escape $(DOCS)
+all: $(PICTURES) $(DOCS)
 
 %.pdf: %.svg
 	inkscape -D -A $@ $<
@@ -16,6 +15,9 @@ all: $(PICTURES)
 
 %.eps: %.dia
 	dia -e $@ -t eps $^
+
+%.pdf: %.tex
+	$(PDFLATEX_ENV) pdflatex -shell-escape $^
 
 clean:
 	$(RM) -r *.dia~ *.log _minted* $(PICTURES) $(ARTEFACTS)
