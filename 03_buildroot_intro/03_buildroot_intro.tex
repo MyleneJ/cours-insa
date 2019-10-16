@@ -110,7 +110,7 @@ BR2_PACKAGE_STRESS=y
     \code{configs/} via :
     \code{make <foo>_defconfig}
     \begin{itemize}
-    \item Ca va surcharger le \code{.config}, si il y en a un
+    \item Cela va surcharger le \code{.config}, si il y en a un
     \end{itemize}
   \item Pour créer un {\em defconfig} :
     \code{make savedefconfig}
@@ -129,8 +129,8 @@ BR2_PACKAGE_STRESS=y
       boards, Minnowboard, quelques i.MX6 boards
     \end{itemize}
   \item Pour les lister : \code{make list-defconfigs}
-  \item La plupart des {\em defconfigs} sont minimaux : compile seulement a
-    toolchain, bootloader, kernel and minimal root filesystem.
+  \item La plupart des {\em defconfigs} sont minimaux : compile seulement une
+    toolchain, un bootloader, un kernel et un root filesystem minimal.
     \begin{block}{}
 \begin{verbatim}
 $ make qemu_arm_vexpress_defconfig
@@ -205,7 +205,7 @@ $ make V=1
   \item \code{package/} : tous les paquets user space (2200+)
   \item \code{fs/} : Logique pour générer une image rootfs dans différents
     formats (\code{ext2}, \code{squashfs}, \code{tar}, \code{ubifs}, etc)
-  \item \code{boot/} : paquets de bootloarder (\code{barebox}, \code{uboot}, etc)
+  \item \code{boot/} : paquets de bootloader (\code{barebox}, \code{uboot}, etc)
   \end{itemize}
 \end{frame}
 
@@ -296,7 +296,7 @@ $ make V=1
       \item \code{THIS_IS_NOT_YOUR_ROOT_FILESYSTEM}
       \item ...
       \end{itemize}
-    \item Le routfs \textbf{cible}
+    \item Le rootfs \textbf{cible}
     \item Pas complètement prêt pour la cible: permissions, fichiers device, etc
     \item Utilisé pour générer le rootfs final \code{images/}
     \item Variable: \code{TARGET_DIR}
@@ -316,7 +316,7 @@ $ make V=1
       \item \code{rootfs.tar}
       \item \code{rootfs.ubi}
       \end{itemize}
-    \item Contient les images finales: kernel, bootloader, rootfs image(s)
+    \item Contient les images finales: kernel, bootloader, image(s) rootfs
     \item Variable: \code{BINARIES_DIR}
     \end{itemize}
   \end{itemize}
@@ -336,7 +336,7 @@ $ make V=1
   \begin{itemize}
   \item  {\bf root filesystem overlay} : Permet de customiser le contenu
     du rootfs : ajout de config, scripts, répertoires, etc
-  \item Un {\em root filesystem overlay} est un répertoire où le contenu sera
+  \item Un {\em root filesystem overlay} est un répertoire dont le contenu sera
     {\bf copié au dessus du root filesystem}. Permet d'écraser des fichiers.
   \item Option \code{BR2_ROOTFS_OVERLAY} avec liste des chemins du rootfs overlay
     \begin{block}{}
@@ -364,7 +364,7 @@ board/myproject/rootfs-overlay/etc/init.d/S99myapp
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Script post-build: example}
+\begin{frame}[fragile]{Script post-build: exemple}
 
 \begin{block}{board/myproject/post-build.sh}
 \begin{minted}[fontsize=\tiny]{bash}
@@ -411,7 +411,7 @@ BR2_ROOTFS_POST_BUILD_SCRIPT="board/myproject/post-build.sh"
 
 \begin{frame}{Déploiement des images}
   \begin{itemize}
-  \item Par défaut, Buildroot stockent les images dans \code{output/images}
+  \item Par défaut, Buildroot stocke les images dans \code{output/images}
   \item Déploiement doit être fait par l'utilisateur
   \item Si stockage amovible comme carte SD ou clef USB :
     \begin{itemize}
@@ -423,16 +423,16 @@ BR2_ROOTFS_POST_BUILD_SCRIPT="board/myproject/post-build.sh"
 
 \begin{frame}{Déploiement des images : genimage}
   \begin{itemize}
-  \item \code{genimage} : peut créer des image complète pour des périphériques
+  \item \code{genimage} : peut créer des image complètes pour des périphériques
     blocks (carte SD, clef USB, disque dur)
-  \item Exemple commun avec 2 partitions : une partition FAT partition
+  \item Exemple commun avec 2 partitions : une partition FAT
     pour bootloader \& kernel, une partition ext4 pour le root filesystem
   \item Il existe un script d'aide \code{support/scripts/genimage.sh}
   \item De plus en plus utilisé \MVRightarrow Image toute prête
   \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Deploying the images: genimage example}
+\begin{frame}[fragile]{Déploiemnt des images: exemple genimage}
 \begin{block}{genimage-raspberrypi.cfg}
 \begin{columns}
   \column{0.4\textwidth}
