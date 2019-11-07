@@ -52,8 +52,6 @@ __EOF__
 
 # Enabled rpi3 MCP2515 CAN with SPI
 dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
-dtparam=spi=on
-dtoverlay=spi0-hw-cs
 __EOF__
 		;;
 	esac
