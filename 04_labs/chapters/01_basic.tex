@@ -155,8 +155,31 @@ Insérez la carte SD dans la RPi3.\\
 Branchez la série selon les pins de votre RPi3 :
 
 \begin{centering}
-  \includegraphics[height=0.5\textheight]{pictures/04_labs/rpi3_gpio_layout_uarts.png} \\
+  \includegraphics[height=0.4\textheight]{pictures/04_labs/rpi3_gpio_layout_uarts.png} \\
 \end{centering}
+
+\begin{center}
+  \begin{tabular}{ c | c }
+    \hline
+    RPi & Connecteur FTDI \\ \hline
+    GND - Noir - Pin 6 & GND - Noir \\
+    TX - Blanc - Pin 8 & RX - Jaune \\
+    RX - Gris - Pin 10 & TX - Orange \\
+    \hline
+  \end{tabular}
+  \end{center}
+
+Ou sur votre RPi avec le module CAN :
+
+\begin{centering}
+  \includegraphics[height=0.3\textheight]{pictures/04_labs/rpi3_pican_uarts.jpg} \\
+\end{centering}
+
+Lancer un outils série tel que \texttt{picocom} ou \texttt{gtkterm} :
+
+\begin{verbatim}
+picocom -b 115200 /dev/ttyUSB0
+\end{verbatim}
 
 Allumez via USB votre board et vous devriez voir le système booter !
 
