@@ -29,6 +29,13 @@ Ce qui nous donnera une connexion SPI suivante : \\
   \includegraphics[height=0.3\textheight]{graphics/04_labs/rpi3_mcp2515.pdf} \\
 \end{centering}
 
+Cette connexion est déjà réalisée en utilisant une
+\href{http://skpang.co.uk/catalog/images/raspberrypi/pi_2/PICAN2UG13.pdf}{pican2}
+
+\begin{centering}
+  \includegraphics[height=0.3\textheight]{pictures/04_labs/rpi3_pican.jpg} \\
+\end{centering}
+
 \section{Configuration}
 \subsection{Configuration de la RPi3 : defconfig + device-tree}
 
@@ -59,14 +66,7 @@ Les informations sur la syntaxe de ce fichier sont disponibles sur ce site
 \url{http://elinux.org/RPiconfig}. Les dtoverlay permettent d'activer des
 parties hardware de la raspberry pi en modifiant le Device Tree.
 
-Pour activer le bus SPI, il faut utiliser le \code{dtparam} et pour activer le
-hardware CS, ça sera via \code{dtoverlay} (voir la documentation \href{https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L2103..L2106}{ici}):
-\begin{verbatim}
-dtparam=spi=on
-dtoverlay=spi0-hw-cs
-\end{verbatim}
-
-En ce qui concerne le chip CAN, il faut utiliser un \code{dtoverlay}.
+Pour activer le chip CAN, il faut utiliser un \code{dtoverlay}.
 Voici une \href{https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L56}{documentation}
 à lire concernant leur utilisation avec la node du controlleur CAN que nous
 utiliserons \href{https://github.com/raspberrypi/firmware/blob/master/boot/overlays/README#L1478..L1485}{MCP2515}.
@@ -75,15 +75,33 @@ dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
 \end{verbatim}
 
 Toutes ces nouvelles valeurs devront être ajoutées dans le fichier \code{config.txt}
-en ajoutant du code dans le script \code{post-image.sh} de la RPi3. Prendre
-exemple sur les autres arguments pour ajouter une option \code{--add-mcp2515-overlay}.
+en ajoutant du code dans le script \code{post-image.sh} de la RPi3.
+Prendre exemple sur les autres arguments pour ajouter une option
+\code{--add-mcp2515-overlay}. Essayer tout seul et si vous n'y arrivez pas,
+regarder la correction sur \url{https://raw.githubusercontent.com/MyleneJ/cours-insa/master/files/post-image.sh}
+
+\begin{verbatim}
+cd buildroot/board/raspberrypi3/
+wget https://raw.githubusercontent.com/MyleneJ/cours-insa/master/files/post-image.sh
+chmod +x post-image.sh
+\end{verbatim}
 
 Une fois que le script a été modifié, il faudra ajouter l'option dans la
 configuration Buildroot (cf variable \code{BR2_ROOTFS_POST_SCRIPT_ARGS}).
 
+\begin{verbatim}
+make menuconfig
+\end{verbatim}
+
 \begin{centering}
-\includegraphics[height=0.3\textheight]{pictures/04_labs/config_br_overlay.jpg} \\
+\includegraphics[height=0.4\textheight]{pictures/04_labs/config_br_overlay.jpg} \\
 \end{centering}
+
+Et rebuilder avec :
+
+\begin{verbatim}
+make
+\end{verbatim}
 
 \subsubsection{Configuration kernel}
 
@@ -108,6 +126,8 @@ outils pour utiliser le CAN :
 \item \texttt{LIBSOCKETCAN} : Permet de controller un périphérique CAN via du code en C
 \item \texttt{CAN\_UTILS} : Permet d'ajouter des outils en ligne de commande pour
   tester des périphériques CAN tel que \code{candump} et \code{cansend}.
+\item \texttt{IPROUTE2} : Permet d'avoir une commande \code{ip} complète et
+  supportant le CAN.
 \end{itemize}
 
 Ouvrir le menuconfig de buildroot et chercher les paquets qui nous intéressent.
@@ -118,7 +138,7 @@ Les activer, sauvegarder votre configuration et compiler une nouvelle image.
 Vérifier qu'ils sont bien compilés pour votre RPi3 avec :
 
 \begin{verbatim}
-$ find output/target/ -iname can*
+find output/target/ -iname can*
 \end{verbatim}
 
 \begin{centering}
@@ -126,7 +146,7 @@ $ find output/target/ -iname can*
 \end{centering}
 
 \begin{verbatim}
-$ find output/staging/ -iname can*
+find output/staging/ -iname can*
 \end{verbatim}
 
 \begin{centering}
@@ -134,46 +154,62 @@ $ find output/staging/ -iname can*
 \end{centering}
 
 Maintenant, flasher votre carte SD avec votre nouvelle image, booter votre
-RPi3 avec le module CAN connecté comme il faut et tester votre interface
-\code{can0} avec :
+RPi3 avec le module CAN connecté comme il faut.
+Charger les modules SPI et MCP2515 pour avoir l'interface \code{can0}
+disponible :
+
+\begin{verbatim}
+modprobe spi-bcm2835
+modprobe mcp251x
+[  151.048706] CAN device driver interface
+[  151.067634] mcp251x spi0.0 can0: MCP2515 successfully initialized.
+\end{verbatim}
+
+Et tester votre interface \code{can0} avec :
 
 \begin{verbatim}
 $ ip link set can0 up type can bitrate 500000
 $ ifconfig
-$ cansend can0 01a#11223344AABBCCDD
+\end{verbatim}
+
+Si votre interface \code{can0} est disponible, brancher deux RPi pour
+pouvoir communiquer l'une avec l'autre via \code{candump/cansend} sur l'une
+et l'autre :
+\begin{verbatim}
 $ candump can0
+$ cansend can0 01a#11223344AABBCCDD
 \end{verbatim}
 
-\subsection{Un peu d'overlay}
+% \subsection{Un peu d'overlay}
 
-Pour activer automatiquement l'interface CAN au boot, on va utiliser
-une règle UDEV. Pour cela, on utilisera le système d'overlay dans Buildroot.
+% Pour activer automatiquement l'interface CAN au boot, on va utiliser
+% une règle UDEV. Pour cela, on utilisera le système d'overlay dans Buildroot.
 
-Lire la documentation de Buildroot sur les
-\href{https://buildroot.org/downloads/manual/manual.html#rootfs-custom}{overlays}
-et notamment la variable \texttt{BR2\_ROOTFS\_OVERLAY},
-la documentation sur les
-\href{https://www.linuxembedded.fr/2015/05/une-introduction-a-udev/}{règles udev}.
+% Lire la documentation de Buildroot sur les
+% \href{https://buildroot.org/downloads/manual/manual.html#rootfs-custom}{overlays}
+% et notamment la variable \texttt{BR2\_ROOTFS\_OVERLAY},
+% la documentation sur les
+% \href{https://www.linuxembedded.fr/2015/05/une-introduction-a-udev/}{règles udev}.
 
-Créer un overlay pour la RPi3 pour créer une règle UDEV \code{can.rules}
-suivante :
+% Créer un overlay pour la RPi3 pour créer une règle UDEV \code{can.rules}
+% suivante :
 
-\begin{verbatim}
-SUBSYSTEM=="net", DEVPATH=="/devices/platform/soc/3f204000.spi/spi_master/spi0/spi0.0/net/can0", \
-RUN+="/sbin/ip link set can0 up type can bitrate 500000"
-\end{verbatim}
+% \begin{verbatim}
+% SUBSYSTEM=="net", DEVPATH=="/devices/platform/soc/3f204000.spi/spi_master/spi0/spi0.0/net/can0", \
+% RUN+="/sbin/ip link set can0 up type can bitrate 500000"
+% \end{verbatim}
 
-Configurer Buildroot pour prendre en compte votre overlay. Vérifier que votre
-règle est bien installée dans le dossier \code{target} :
+% Configurer Buildroot pour prendre en compte votre overlay. Vérifier que votre
+% règle est bien installée dans le dossier \code{target} :
 
-\begin{verbatim}
-$ find . -iname can.rules
-./board/raspberrypi/overlay/etc/udev/rules.d/can.rules
-./output/target/etc/udev/rules.d/can.rules
-\end{verbatim}
+% \begin{verbatim}
+% $ find . -iname can.rules
+% ./board/raspberrypi/overlay/etc/udev/rules.d/can.rules
+% ./output/target/etc/udev/rules.d/can.rules
+% \end{verbatim}
 
-Et, une fois le rootfs installé sur votre carte SD, que l'interface CAN
-est automatiquement montée :
-\begin{verbatim}
-$ ifconfig
-\end{verbatim}
+% Et, une fois le rootfs installé sur votre carte SD, que l'interface CAN
+% est automatiquement montée :
+% \begin{verbatim}
+% $ ifconfig
+% \end{verbatim}
