@@ -36,7 +36,7 @@
   \begin{itemize}
   \item Une système GNU/Linux embarqué nécéssite:
     \begin{itemize}
-    \item Chaîne de compilation croisée (Gcc, as, ld, LibC)
+    \item Chaîne de \textbf{compilation croisée} (Gcc, as, ld, LibC)
     \item Un Bootloader (U-Boot, barebox, grub, isolinux)
     \item Noyau Linux adapté à l'archi hardware
     \item Outils GNU/LINUX Commandes Linux (sh, ls, cp, etc.)
@@ -120,7 +120,7 @@
 \section{Construire son système embarqué}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}{Architecture}{}
+\begin{frame}{\textbf{Architecture}}{}
   \begin{center}
     \includegraphics[height=0.8\textheight]{graphics/01_cours_magistral/linux-system-architecture.pdf}
   \end{center}
@@ -130,13 +130,13 @@
 \begin{frame}{Bootloader}{}
   \begin{itemize}
   \item Premier logiciel lancé au démarrage de la machine
-  \item Initialise le matériel (RAM, stockage, ...) nécésaire au boot
-  \item Charge le noyau en RAM et lui donne la main
+  \item \textbf{Initialise le matériel} (RAM, stockage, ...) nécésaire au boot
+  \item \textbf{Charge le noyau} en RAM et lui donne la main
   \item Permet de donner des arguments au noyau
   \item Exemples:
     \begin{itemize}
-    \item U-boot (supporte de nombreux architectures, la référence)
-    \item Barebox (u-boot v2, meilleure archi, moins de fonctionnalités pour l'instant)
+    \item \textbf{U-boot} (supporte de nombreux architectures, la référence)
+    \item \textbf{Barebox} (u-boot v2, meilleure archi, moins de fonctionnalités pour l'instant)
     \item grub (x86, serveur et desktop principalement)
     \item isolinux (alternative x86 à grub)
     \end{itemize}
@@ -149,10 +149,10 @@
   \begin{itemize}
   \item Génération d'un noyau:
     \begin{enumerate}
-    \item Récupération du noyau (kernel.org)
+    \item Récupération du noyau (\textbf{kernel.org})
     \item Développement du support des drivers manquants
     \item Création du support de la carte (board config  3.10 device tree)
-    \item Configuration le noyau (make menuconfig)
+    \item Configuration le noyau (\textbf{make menuconfig})
     \item Compilation du noyau (make uImage)
     \item Installation sur la cible
     \end{enumerate}
@@ -170,7 +170,7 @@
     \begin{itemize}
     \item Récupérer les sources et les compiler un par un \MVRightarrow laborieux
     \item GNU/Linux coreutils \MVRightarrow trop lourd pour l'embarqué
-    \item Busybox : regroupe la majorité des commandes Linux en un seul executable
+    \item \textbf{Busybox} : regroupe la majorité des commandes Linux en un seul executable
       \begin{itemize}
       \item 95\% des distributions Linux embarqués l'utilise
       \item Simple, léger, portable
