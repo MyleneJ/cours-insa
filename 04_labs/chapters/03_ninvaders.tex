@@ -1,0 +1,152 @@
+\chapter
+{Création d'un nouveau paquet dans Buildroot}
+{Objectifs:
+  \begin{itemize}
+  \item Création d'un nouveau paquet pour {\em nInvaders}
+  \item Comprendre comment ajouter des dépendances
+  \end{itemize}
+}
+
+\section{Préparation}
+
+Après une recherche Google, trouver le site web pour {\em nInvaders}
+et télécharger le code source. Analyser son système de build et
+déduire quelle infrastructure de paquet est la plus appropriée.
+
+\section{Paquet minimal}
+
+Créer un répertoire pour ce paquet dans les sources de Buildroot :
+\code{package/ninvaders}. Créer un fichier \code{Config.in} avec une option
+pour activer ce paquet et un fichier \code{ninvaders.mk} minimal qui spécifiera
+ce qu'il faut pour juste {\em télécharger} le paquet.
+
+Pour information, l'URL de téléchargement des sources {\em nInvaders} est
+\code{http://downloads.sourceforge.net/project/ninvaders/ninvaders/0.1.1/}.
+
+Note: Pour y arriver, seulement deux variables sont nécessaires d'être définies
+dans le fichier \code{.mk} ainsi qu'un appel à la macro de l'infrastructure
+appropriée.
+
+Maintenant, aller dans le \code{menuconfig}, activer {\em nInvaders}, et lancer
+une compilation \code{make}. Vous devriez voir l'archive {\em nInvaders}
+être téléchargée et extraite. Regarder dans \code{output/build/} pour voir
+si ça a été extrait comme attendu.
+
+\section{C'est parti pour la compilation !}
+
+Comme vous avez pu le voir, {\em nInvaders} utilise un simple \code{Makefile}
+pour son processus de build. Vous allez donc devoir définir les variables
+de build pour {\em nInvaders}. Pour faire cela, 4 variables sont fournies par
+Buildroot :
+
+\begin{itemize}
+
+\item \code{TARGET_MAKE_ENV}, qui devra être passé dans l'environnement utilisé
+  lors de la commande \code{make}.
+
+\item \code{MAKE}, contient le vrai appel du \code{make} avec potentiellement
+  quelques paramètres pour paralleliser le build.
+
+\item \code{TARGET_CONFIGURE_OPTS}, contient la définition de pleins de
+  variables utiles dans les \code{Makefiles} comme : \code{CC},
+  \code{CFLAGS}, \code{LDFLAGS}, etc.
+
+\item \code{@D}, contient le chemin vers le répertoire où le code source de
+  {\em nInvaders} a été extrait.
+
+\end{itemize}
+
+Quand vous créez des paquets Buildroot, c'est une bonne pratique de regarder
+comment les autres paquets sont définis. Regarder par exemple le paquet
+\code{jhead} qui sera très similaire à ce dont on a besoin pour notre paquet
+\code{ninvaders}.
+
+Lorsque vous avez écrit l'étape de build de {\em nInvaders}, il est temps
+de tester! Mais si vous lancez seulement un \code{make} pour redémarrer
+un build, le paquet \code{ninvaders} ne sera pas rebuildé car il l'a été
+déjà été précemment.
+
+On va donc forcer le build en supprimant complètement le répertoire des
+sources :
+
+\begin{verbatim}
+make ninvaders-dirclean
+\end{verbatim}
+
+Ensuite, recommencer un build :
+
+\begin{verbatim}
+make
+\end{verbatim}
+
+Cette fois, vous devriez voir l'étape \code{ninvaders 0.1.1 Building} mais
+elle échouera car le fichier \code{ncurses.h} est manquant.
+
+\section{Gérer les dépendances}
+
+Le fichier \code{ncurses.h} est manquant parce que {\em nInvaders}
+dépends de la bibliothèque \code{ncurses} pour l'interface sur un terminal en
+mode "texte". On va donc installer \code{ncurses} comme dépendance de
+{\em nInvaders}. Pour cela :
+
+\begin{itemize}
+
+\item Indiquer la dépendance dans le fichier \code{Config.in}. Utiliser le
+  \code{select} pour être sûr que le paquet \code{ncurses} sera automatiquement
+  sélectionné avec la sélection de \code{ninvaders}.
+\item Indiquer la dépendance dans le fichier \code{.mk}.
+
+\end{itemize}
+
+Recommencer un build du paquet avec :
+\code{make ninvaders-dirclean all} (qui est pareil que
+\code{make ninvaders-dirclean} suivi d'un \code{make}).
+
+Maintenant, le paquet devrait être compilé avec succès !
+Si vous jetez un oeil à \code{output/build/ninvaders-0.1.1/}, vous devriez
+voir le binaire \code{nInvaders}. Lancer le programme \code{file} sur
+\code{nInvaders} pour vérifier que c'est bien pour ARM.
+
+\code{nInvaders} a bien été compilé mais il n'est pas pour autant installé
+dans le rootfs de notre cible !
+
+\section{Installation et test du programme}
+
+Si vous regardez le \code{Makefile} des sources de {\em nInvaders},
+vous remarquez qu'il n'y a rien pour installer le programme. Il n'y a pas
+de règle \code{install:}.
+
+Dans \code{ninvaders.mk}, on va devoir créer une {\em commande d'installation
+  pour cible} qui va simplement installer le binaire \code{nInvaders}.
+Utiliser la variable \code{$(INSTALL)} pour cela. Regarder le paquet
+\code{jhead} comme exemple.
+
+Rebuilder une nouvelle fois \code{ninvaders} et cette fois, vous devriez
+voir le binaire \code{nInvaders} dans \code{output/target/usr/bin/}!
+
+Reflasher votre rootfs sur la carte SD et rebooter le système.
+
+\section{Ajout d'un fichier de hash}
+
+Pour finaliser notre paquet, ajouter un fichier manquant : {\em hash file}
+pour permettre de vérifier que les personnes builderont les mêmes sources
+que celles que vous avez utilisé pour votre paquet. Pour savoir le hash,
+SourceForge permet de directement connaitre cela via :
+aller dans la page {\em download} et à coté du nom du fichier, il y a une
+icône d'information qui vous fournit les hashes MD5 et SHA1.
+
+Recompiler avec \code{make ninvaders-dirclean all}.
+Regarder l'output du build et avant le message \code{ninvaders 0.1.1 Extracting},
+vous devriez voir :
+
+\begin{verbatim}
+ninvaders-0.1.1.tar.gz: OK (sha1: ....)
+ninvaders-0.1.1.tar.gz: OK (md5: ....)
+\end{verbatim}
+
+\section{Tester la suppression d'un paquet}
+
+Pour jouer un peu avec Buildroot, réaliser les tests suivants : désactiver
+le paquet \code{ninvaders} dans le \code{menuconfig} et redémarrer le build via
+\code{make}. Quand le build est fini, regarder dans \code{output/target/}.
+Est-ce que {\em nInvaders} est toujours installé ? Si oui, pourquoi ?
